@@ -1,0 +1,74 @@
+.discontainer {
+	position: absolute;
+	top: 0;
+	padding: 0;
+	height: 100%;
+	overflow: auto;
+	background-color:white;
+}
+
+.dimbackground
+{
+	background-color:rgba(0, 0, 0, 0.3);
+}
+
+.listing
+{
+	background-color:white;
+	color:black;
+}
+.listing td
+{
+	white-space:pre;
+	vertical-align:top;
+	font-family:monospace;
+	font-size:1.3em;
+}
+
+.register
+{
+	color:blue;
+}
+
+.instruction
+{
+	color:black;
+}
+
+.label { font-weight:bold; }
+.label:hover {text-decoration:underline;}
+.labelfunc{	color:red!important; }
+.labeldata{	color:#080!important; }
+.labelcode{	color:purple!important; }
+.labelunk{	color:gray!important; }
+
+.data
+{
+	color:#080;
+}
+
+.comment
+{
+}
+
+.syscomment
+{
+	color:#777;
+}
+
+.highlighted
+{
+	background-color:yellow;
+}
+
+
+.disassembly tr.highlightedrow
+{
+	background-color:#FF8;
+}
+.listing tr:hover
+{
+	background-color:#CFF;
+}
+
+
