@@ -124,7 +124,7 @@ function fetchAddr($num)
 	if($fetchCache["addr"] == $num)
 		return $fetchCache;
 	
-	$fetchCache = Fetch(Query("select * from dis_data where addr = $num"));
+	$fetchCache = Fetch(Query("select * from {dis_data} where addr = {0}", $num));
 	return $fetchCache;
 }
 
@@ -140,10 +140,10 @@ function saveAddr($data)
 	$sets = array();
 	foreach($data as $key => $value)
 		if($direct || $data[$key] != $fetchCache[$key])	
-			$sets[] = $key." = '".JustEscape($value)."'";
+			$sets[] = $key." = '".sqlEscape($value)."'";
 	
 	if(count($sets) != 0)
-		Query("update dis_data set ".implode(",", $sets)." where addr=".$data["addr"]);
+		Query("update {dis_data} set ".implode(",", $sets)." where addr={0l}", $data["addr"]);
 
 	$fetchCache = $data;
 }

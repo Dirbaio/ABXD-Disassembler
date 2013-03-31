@@ -1,0 +1,12 @@
+Remove:
+
+SND_Init_xxx
+OS_IsThreadAvailable_xxx
+EXT_TestSetVRAMForScreenShot_xxx
+
+.. any function 16 bytes or less.
+Fuck small functions.
+
+Also: ITCM is mirrored two times, both mirrors seem to be used.
+
+also remove anything above 021901E0

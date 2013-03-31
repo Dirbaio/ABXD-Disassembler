@@ -1,5 +1,4 @@
 <?
 
-	if(IsAllowed("viewUploader"))
-		print actionLinkTagItem(__("Uploader"), "uploader");
+$navigation->add(new PipeMenuLinkEntry(__("Disassembler"), "disassemble"));
 

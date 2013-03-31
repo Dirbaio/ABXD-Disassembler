@@ -9,7 +9,7 @@ function makeImmediateRef($num, $type)
 	
 	if($target["labeltype"] < $type)
 	{
-		Query("update dis_data set labeltype='".JustEscape($type)."' where addr=$num");
+		Query("update {dis_data} set labeltype={0} where addr={1l}", $type, $num);
 	
 		if(($type == LABEL_CODE || $type == LABEL_FUNC) && !$target["code"])
 			makeCode($num);

@@ -15,10 +15,10 @@ $sections = Query("select * from dis_sections where 1");
 
 $addr = (int) $_GET["addr"];
 
-$func = Fetch(Query("select * from dis_data where labeltype=".LABEL_FUNC." and addr <= $addr order by addr desc limit 1"));
+$func = Fetch(Query("select * from {dis_data} where labeltype={0} and addr <= {1} order by addr desc limit 1", LABEL_FUNC, $addr));
 if(!$func)
 {
-	$func =  Fetch(Query("select * from dis_data where 1 order by addr asc limit 1"));
+	$func =  Fetch(Query("select * from {dis_data} where 1 order by addr asc limit 1"));
 	$start = 0x02000000;
 }
 else
@@ -31,8 +31,7 @@ if($start < $addr-$maxcount*2)
 	
 $count = $maxcount*4;
 
-$q = "select * from dis_data where labeltype=".LABEL_FUNC." and addr > $start order by addr asc limit 1";
-$func2 = Fetch(Query($q));
+$func2 = Fetch(Query("select * from {dis_data} where labeltype={0} and addr > {1} order by addr asc limit 1", LABEL_FUNC, $start));
 if($func2)
 	$count = $func2["addr"]-$start;
 
@@ -41,17 +40,10 @@ $count /= 4;
 if($count > $maxcount)
 	$count = $maxcount;
 
-$cond = "1";
-$cond = "dis_data.addr >= $start";
-
-$query = "
-	select * from dis_data 
-	where $cond 
-	order by addr asc limit $count";
 	
-$instrs = Query($query);
-
-print $query;
+$instrs = Query("select * from {dis_data}
+	where addr >= {0}
+	order by addr asc limit {1u}", $start, $count);
 
 while($data = Fetch($instrs))
 {

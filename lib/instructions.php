@@ -383,5 +383,9 @@ function multiplyHalf($data)
 {
 }
 
-
-
+function psrImm($data)
+{
+}
+function psrReg($data)
+{
+}

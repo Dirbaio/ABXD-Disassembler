@@ -4,10 +4,13 @@ $instructionMasks = array(
 //    3         2         1         0
 //   10987654321098765432109876543210
 	'11100001101000000000000000000000' => "nop",
+	'cccc00110p10ffffddddhhhhiiiiiiii' => "psrImm",
+	'cccc00010pl0ffffdddd00000000mmmm' => "psrReg",
 	'cccc0001001011111111111100l1nnnn' => "branchExchange",
 	'cccc101loooooooooooooooooooooooo' => "branch",
 	'cccc000oooosnnnnddddhhhhhtt0mmmm' => "dataProcShiftImm",
 	'cccc000oooosnnnnddddhhhh0tt1mmmm' => "dataProcShiftReg",
+//	 11100011101000001100001100000001
 	'cccc001oooosnnnnddddhhhhiiiiiiii' => "dataProcImm",
 	'cccc010110011111ddddoooooooooooo' => "transConst",
 	'cccc010pubwlnnnnddddoooooooooooo' => "transImm9",
@@ -81,13 +84,14 @@ function shiftType($num)
 
 function wordMatchesMask($word, $mask)
 {
+	$word = (int)$word;
 	$result = array();
 	$powers = array();
 	$result["instr"] = $word;
 	for($i = 0; $i < 32; $i++)
 	{
 		$bit = $word & 1;
-		$word = (int)($word/2);
+		$word = $word>>1;
 		
 		$char = $mask[31-$i];
 		if($char == '0' && $bit != 0) return false;
@@ -136,7 +140,8 @@ function disassembleDb($data)
 	global $exporting, $pc;
 	$pc = $data["addr"];
 	$res = "???";
-	
+
+//	$data["data"] = 0xE1A00000;
 	if($data["type"] == TYPE_CODE)
 		$res = disassemble($data["data"]);
 

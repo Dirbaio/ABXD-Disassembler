@@ -2,9 +2,10 @@
 
 $ajaxPage = true;
 
-$addr = (int) $_GET["addr"];
+$addr = intval($_GET["addr"], 0);
 $type = (int) $_GET["type"];
 
+echo hexNum32($addr);
 switch($_GET["type"])
 {
 	case 0: makeUnknown($addr); break;

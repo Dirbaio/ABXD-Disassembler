@@ -1,6 +1,6 @@
 <?php
 
-$unsignedInt = "int(11) UNSIGNED NOT NULL DEFAULT '0'";
+$dataInt = "int(11) NOT NULL DEFAULT '0'";
 
 $tables["dis_sections"] = array
 	(
@@ -8,8 +8,8 @@ $tables["dis_sections"] = array
 		(
 			"id" => $AI,
 			"name" => "varchar(512)".$notNull,
-			"start" => $unsignedInt,
-			"end" => $unsignedInt,
+			"start" => $dataInt,
+			"end" => $dataInt,
 		),
 		"special" => $keyID
 	);
@@ -18,9 +18,9 @@ $tables["dis_data"] = array
 	(
 		"fields" => array
 		(
-			"addr" => $unsignedInt,
+			"addr" => $dataInt,
 			"section" => $genericInt,
-			"data" => $unsignedInt,
+			"data" => $dataInt,
 			"type" => $smallerInt,
 			"comment" => $text,
 			"label" => "varchar(64)".$notNull,
