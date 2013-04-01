@@ -2,7 +2,8 @@
 
 require("lib/util.php");
 require("lib/disassembler.php");
-require("lib/instructions.php");
+$instructionSet = "arm";
+require("lib/instructionSets/$instructionSet.php");
 require("lib/analysis.php");
 
 

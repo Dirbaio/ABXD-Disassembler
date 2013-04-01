@@ -17,6 +17,11 @@ function immediate($num)
 	return applyClass("data highlight", "#".hexNum($num));
 }
 
+function register($num)
+{
+	return applyClass("register highlight r$num", registerName($num));
+}
+
 
 function immediateRef($num)
 {

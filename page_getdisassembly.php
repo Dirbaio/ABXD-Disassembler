@@ -66,7 +66,7 @@ while($data = Fetch($instrs))
 	if($cmt) $cmt = "@$cmt";
 	$cmt = wordwrap($cmt, 50);
 	printAddr($data);
-	echo "<td style=\"width:30px;\"></td><td style=\"width:80px;\">", disassembleDb($data), "</td><td>", $cmt, "</td></tr>";
+	echo "<td style=\"width:30px;\"></td><td style=\"width:80px;\">", disassemble($data), "</td><td>", $cmt, "</td></tr>";
 }
 ?>
 

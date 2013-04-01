@@ -1,86 +1,5 @@
 <?php
 
-$instructionMasks = array(
-//    3         2         1         0
-//   10987654321098765432109876543210
-	'11100001101000000000000000000000' => "nop",
-	'cccc00110p10ffffddddhhhhiiiiiiii' => "psrImm",
-	'cccc00010pl0ffffdddd00000000mmmm' => "psrReg",
-	'cccc0001001011111111111100l1nnnn' => "branchExchange",
-	'cccc101loooooooooooooooooooooooo' => "branch",
-	'cccc000oooosnnnnddddhhhhhtt0mmmm' => "dataProcShiftImm",
-	'cccc000oooosnnnnddddhhhh0tt1mmmm' => "dataProcShiftReg",
-//	 11100011101000001100001100000001
-	'cccc001oooosnnnnddddhhhhiiiiiiii' => "dataProcImm",
-	'cccc010110011111ddddoooooooooooo' => "transConst",
-	'cccc010pubwlnnnnddddoooooooooooo' => "transImm9",
-	'cccc011pubwlnnnnddddhhhhhtt0mmmm' => "transReg9",
-	'cccc1111dddddddddddddddddddddddd' => "swi",
-	'cccc000101101111dddd11110001mmmm' => "clz",
-//    3         2         1         0
-//   10987654321098765432109876543210
-	'cccc00010b00nnnndddd00001001mmmm' => "swap",
-	'cccc000pu0wlnnnndddd00001tt1mmmm' => "transReg10",
-	'cccc000pu1wlnnnnddddhhhh1tt1LLLL' => "transImm10",
-	'cccc100puswlnnnnrrrrrrrrrrrrrrrr' => "transMultiple",
-	'cccc000000asddddnnnnssss1001mmmm' => "multiply",
-	'cccc00001uashhhhllllssss1001mmmm' => "multiplyLong",
-	'cccc00010oo0hhhhllllssss1yx0mmmm' => "multiplyHalf",
-);
-
-$conditionFlags = array(
-	"EQ",
-	"NE",
-	"CS",
-	"CC",
-	"MI",
-	"PL",
-	"VS",
-	"VC",
-	"HI",
-	"LS",
-	"GE",
-	"LT",
-	"GT",
-	"LE",
-	"",
-	"NV"
-);
-
-
-function conditionField($cond)
-{
-	global $conditionFlags;
-	
-	return $conditionFlags[$cond];
-}
-
-function register($num)
-{
-	return applyClass("register highlight r$num", registerName($num));
-}
-
-function registerName($num)
-{
-	if($num == 15)
-		return "PC";
-	if($num == 14)
-		return "LR";
-	if($num == 13)
-		return "SP";
-		
-	return "R".$num;
-}
-
-function shiftType($num)
-{
-	if($num == 0) return "LSL";
-	if($num == 1) return "LSR";
-	if($num == 2) return "ASR";
-	if($num == 3) return "ROR";
-	return "???";
-}
-
 
 function wordMatchesMask($word, $mask)
 {
@@ -115,7 +34,7 @@ function wordMatchesMask($word, $mask)
 	return $result;
 }
 
-function disassemble($word)
+function disassembleInstruction($word)
 {
 	global $instructionMasks, $analysisQueue, $autoanalysis, $analyzeNext, $pc;
 	foreach($instructionMasks as $mask => $func)
@@ -135,7 +54,7 @@ function disassemble($word)
 	return "???";
 }
 
-function disassembleDb($data)
+function disassemble($data)
 {
 	global $exporting, $pc;
 	$pc = $data["addr"];
@@ -143,7 +62,7 @@ function disassembleDb($data)
 
 //	$data["data"] = 0xE1A00000;
 	if($data["type"] == TYPE_CODE)
-		$res = disassemble($data["data"]);
+		$res = disassembleInstruction($data["data"]);
 
 	if($res == "???")
 		$res = ".word ".applyClass("data highlight", hexNum($data["data"]));
